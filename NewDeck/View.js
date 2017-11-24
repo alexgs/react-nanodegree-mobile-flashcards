@@ -1,11 +1,28 @@
 import React, { PureComponent } from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 
+const styleConstants = {
+    buttonHorizontalPadding: 30,
+    buttonVerticalPadding: 10
+};
+
 const styles = StyleSheet.create( {
+    button: {
+        backgroundColor: 'purple',
+        marginTop: 15,
+        paddingTop: styleConstants.buttonVerticalPadding,
+        paddingBottom: styleConstants.buttonVerticalPadding,
+        paddingLeft: styleConstants.buttonHorizontalPadding,
+        paddingRight: styleConstants.buttonHorizontalPadding
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 18
+    },
     container: {
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: 'white',
         flex: 1,
         justifyContent: 'center'
     },
@@ -27,8 +44,13 @@ const styles = StyleSheet.create( {
 class NewDeckView extends PureComponent {
     constructor( props ) {
         super( props );
+        this.handleButtonPress = this.handleButtonPress.bind( this );
         this.handleInputChange = this.handleInputChange.bind( this );
         this.state = { newDeckName: '' };
+    }
+
+    handleButtonPress() {
+        console.log( `+-+ New deck name: ${this.state.newDeckName} +-+` );
     }
 
     handleInputChange( text ) {
@@ -44,6 +66,9 @@ class NewDeckView extends PureComponent {
                     onChangeText={ this.handleInputChange }
                     value={ this.state.newDeckName }
                 />
+                <TouchableOpacity onPress={ this.handleButtonPress } style={ styles.button }>
+                    <Text style={ styles.buttonText }>SAVE</Text>
+                </TouchableOpacity>
             </View>
         );
     }
