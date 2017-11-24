@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 class DeckListView extends PureComponent {
     render() {
-        // console.log( JSON.stringify( this.props, null, 2 ) );
         return (
             <View>
                 <Text>Hello { this.props.hello }!</Text>
