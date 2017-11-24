@@ -1,7 +1,10 @@
-// import { combineReducers } from 'redux-immutable';
+import Immutable from 'immutable';
+import { combineReducers } from 'redux-immutable';
 
-function basicReducer (initialState={}, action) {
-    return { hello: 'world' };
+function basicReducer (state=Immutable.Map(), action) {
+    return Immutable.fromJS( { hello: 'Susannah' } );
 }
 
-export default basicReducer;
+export default combineReducers( {
+    foo: basicReducer
+} );

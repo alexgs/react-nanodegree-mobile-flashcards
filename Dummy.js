@@ -7,14 +7,14 @@ class Dummy extends PureComponent {
         console.log( JSON.stringify( this.props, null, 2 ) );
         return (
             <View>
-                <Text>Hello {this.props.hello}! Shake your booty!</Text>
+                <Text>Hello { this.props.hello }! Shake your booty!</Text>
             </View>
         );
     }
 }
 
 function mapStateToProps( state ) {
-    return { hello: state.hello };
+    return { hello: state.getIn( [ 'foo', 'hello' ] ) };
 }
 
 export default connect( mapStateToProps )( Dummy );
