@@ -1,13 +1,25 @@
 import React, { PureComponent } from 'react';
-import { View, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
+
+const styles = StyleSheet.create( {
+    container: {
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        flex: 1,
+        justifyContent: 'center'
+    },
+    label: {
+        fontSize: 30,
+        textAlign: 'center'
+    }
+} );
 
 class NewDeckView extends PureComponent {
     render() {
         return (
-            <View>
-                <Text>Hello { this.props.hello }!</Text>
-                <Text>NEW DECK</Text>
+            <View style={ styles.container }>
+                <Text style={ styles.label }>What is the title of your new deck?</Text>
             </View>
         );
     }
