@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+// TODO Setup Redux store
+// TODO Create skeletons for each of the 5 different views
+
 export default class App extends React.Component {
   render() {
     return (
