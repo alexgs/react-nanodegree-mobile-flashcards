@@ -1,6 +1,8 @@
+import _ from 'lodash';
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
+
 import * as actions from './actions';
 
 const styleConstants = {
@@ -42,23 +44,35 @@ const styles = StyleSheet.create( {
     }
 } );
 
-class DeckListView extends PureComponent {
+const LOG_PREFIX = '+-+';
+
+class NewDeckView extends PureComponent {
     constructor( props ) {
         super( props );
         this.handleButtonPress = this.handleButtonPress.bind( this );
+        this.handleInputChange = this.handleInputChange.bind( this );
+        this.state = { newDeckName: '' };
     }
 
     handleButtonPress() {
-        this.props.dispatch( actions.placeholder() );
+        this.props.dispatch( actions.saveNewDeckStart( this.state.newDeckName ) );
+    }
+
+    handleInputChange( text ) {
+        this.setState( { newDeckName: text } );
     }
 
     render() {
         return (
-            <View>
-                <Text>Hello { this.props.hello }!</Text>
-                <Text>DECK LIST</Text>
+            <View style={ styles.container }>
+                <Text style={ styles.label }>What is the title of your new deck?</Text>
+                <TextInput
+                    style={ styles.input }
+                    onChangeText={ this.handleInputChange }
+                    value={ this.state.newDeckName }
+                />
                 <TouchableOpacity onPress={ this.handleButtonPress } style={ styles.button }>
-                    <Text style={ styles.buttonText }>DO PLACEHOLDER</Text>
+                    <Text style={ styles.buttonText }>SAVE</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -69,4 +83,4 @@ function mapStateToProps( state ) {
     return { hello: state.getIn( [ 'foo', 'hello' ] ) };
 }
 
-export default connect( mapStateToProps )( DeckListView );
+export default connect( mapStateToProps )( NewDeckView );
