@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 
+import * as api from '../api';
+
 const styleConstants = {
     buttonHorizontalPadding: 30,
     buttonVerticalPadding: 10
@@ -51,6 +53,7 @@ class NewDeckView extends PureComponent {
 
     handleButtonPress() {
         console.log( `+-+ New deck name: ${this.state.newDeckName} +-+` );
+        api.saveNewDeck( this.state.newDeckName );
     }
 
     handleInputChange( text ) {

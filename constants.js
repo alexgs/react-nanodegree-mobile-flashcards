@@ -1,3 +1,4 @@
 export const STORE = {
-    DECKS: 'decks'
+    DECKS: 'decks',
+    DECK_METADATA: 'deck-metadata'
 };
