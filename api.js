@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import uuidGenerator from 'uuid/v4';
 import { AsyncStorage } from 'react-native';
-import { STORE } from './constants';
+import { ERROR_SOURCES, STORE } from './constants';
+import * as utils from './utils';
 
 import flow from 'lodash/fp/flow';
 import fromPairs from 'lodash/fp/fromPairs';
@@ -48,7 +49,7 @@ export const saveNewDeck = function( title ) {
             // Handle errors or retrieve the new data
             if ( errors && errors.length > 0 ) {
                 const message = `${LOG_PREFIX} Error(s) saving data :: ${JSON.stringify( errors )}`;
-                throw new Error( message );
+                throw utils.errorFactory( message, ERROR_SOURCES.API );
             } else {
                 return AsyncStorage.getItem( STORE.DECK_METADATA );
             }
@@ -56,6 +57,6 @@ export const saveNewDeck = function( title ) {
         .then( json => {
             // Return a Promise with just the new data
             const data = _.get( JSON.parse( json ), id );
-            return Promise.resolve( { [id]: data } );
+            return Promise.resolve( data );
         } );
 };

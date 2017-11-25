@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import * as api from '../api';
+import * as actions from './actions';
 
 const styleConstants = {
     buttonHorizontalPadding: 30,
@@ -55,14 +55,16 @@ class NewDeckView extends PureComponent {
     }
 
     handleButtonPress() {
-        console.log( `${LOG_PREFIX} New deck name: ${this.state.newDeckName} ${LOG_PREFIX}` );
-        api.saveNewDeck( this.state.newDeckName )
-            .then( newDeckData => {
-                const deckId = _.head( _.keys(newDeckData) );
-                const payload = newDeckData[ deckId ];
-                console.log( `${LOG_PREFIX} New deck saved :: ${deckId} -> ${JSON.stringify( payload )} ${LOG_PREFIX}` );
-            } )
-            .catch( error => console.log( `${LOG_PREFIX} ${error.message} ${LOG_PREFIX}` ) );
+        // console.log( `${LOG_PREFIX} New deck name: ${this.state.newDeckName} ${LOG_PREFIX}` );
+        // api.saveNewDeck( this.state.newDeckName )
+        //     .then( newDeckData => {
+        //         const deckId = _.head( _.keys(newDeckData) );
+        //         const payload = newDeckData[ deckId ];
+        //         console.log( `${LOG_PREFIX} New deck saved :: ${deckId} -> ${JSON.stringify( payload )} ${LOG_PREFIX}` );
+        //     } )
+        //     .catch( error => console.log( `${LOG_PREFIX} ${error.message} ${LOG_PREFIX}` ) );
+
+        this.props.dispatch( actions.saveNewDeckStart( this.state.newDeckName ) );
     }
 
     handleInputChange( text ) {
