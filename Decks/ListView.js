@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from './actions';
+import { STORE } from '../constants';
 
 const styleConstants = {
     buttonHorizontalPadding: 30,
@@ -57,20 +58,19 @@ class DeckListView extends PureComponent {
     }
 
     render() {
-        return (
-            <View>
-                <Text>Hello { this.props.hello }!</Text>
-                <Text>DECK LIST</Text>
-                <TouchableOpacity onPress={ this.handleButtonPress } style={ styles.button }>
-                    <Text style={ styles.buttonText }>DO PLACEHOLDER</Text>
-                </TouchableOpacity>
-            </View>
-        );
+        const metadata = this.props[ STORE.DECK_METADATA ];
+        const decks = metadata.asMutable()
+            .sort( ( a, b ) => a.get( 'title' ).localeCompare( b.get( 'title' ) ) )
+            .map( data => <Text key={ data.get( 'id' ) }>{ data.get( 'title' ) }</Text> )
+            .toArray();
+        return ( <View>{ decks }</View> );
     }
 }
 
 function mapStateToProps( state ) {
-    return { hello: state.getIn( [ 'foo', 'hello' ] ) };
+    return {
+        [STORE.DECK_METADATA]: state.get( STORE.DECK_METADATA )
+    };
 }
 
 export default connect( mapStateToProps )( DeckListView );
