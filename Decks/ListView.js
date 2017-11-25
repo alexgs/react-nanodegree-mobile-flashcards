@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import DeckButton from './DeckButton';
 import * as actions from './actions';
@@ -8,10 +8,7 @@ import { STORE } from '../constants';
 const styles = StyleSheet.create( {
     container: {
         alignItems: 'center',
-        backgroundColor: 'oldlace',
-        flex: 1,
-        justifyContent: 'center',
-        paddingTop: 10
+        paddingBottom: 15
     }
 } );
 
@@ -42,7 +39,12 @@ class DeckListView extends PureComponent {
                 />
             ) )
             .toArray();
-        return ( <View style={ styles.container }>{ decks }</View> );
+
+        return (
+            <ScrollView contentContainerStyle={ styles.container }>
+                { decks }
+            </ScrollView>
+        );
     }
 }
 
