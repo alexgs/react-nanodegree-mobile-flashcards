@@ -1,6 +1,6 @@
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import DeckListView from '../DeckList/View';
-import NewDeckView from '../NewDeck/View';
+import DeckListView from '../Decks/ListView';
+import NewDeckView from '../Decks/NewDeckView';
 
 const MainNavigator = TabNavigator( {
     Decks: {

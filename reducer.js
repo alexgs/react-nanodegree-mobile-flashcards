@@ -1,7 +1,6 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux-immutable';
-import deckListReducer from './DeckList/reducer';
-import newDeckReducer from './NewDeck/reducer';
+import { deckMetadataReducer, dummyReducer } from './Decks/reducers';
 import { STORE } from './constants';
 
 function basicReducer( state = Immutable.Map(), action ) {
@@ -9,7 +8,7 @@ function basicReducer( state = Immutable.Map(), action ) {
 }
 
 export default combineReducers( {
-    [STORE.DECK_METADATA]: newDeckReducer,
-    [STORE.DECKS]: deckListReducer,
+    [STORE.DECK_METADATA]: deckMetadataReducer,
+    [STORE.DECKS]: dummyReducer,
     foo: basicReducer
 } );

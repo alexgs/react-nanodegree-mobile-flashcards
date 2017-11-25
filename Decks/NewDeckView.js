@@ -55,15 +55,6 @@ class NewDeckView extends PureComponent {
     }
 
     handleButtonPress() {
-        // console.log( `${LOG_PREFIX} New deck name: ${this.state.newDeckName} ${LOG_PREFIX}` );
-        // api.saveNewDeck( this.state.newDeckName )
-        //     .then( newDeckData => {
-        //         const deckId = _.head( _.keys(newDeckData) );
-        //         const payload = newDeckData[ deckId ];
-        //         console.log( `${LOG_PREFIX} New deck saved :: ${deckId} -> ${JSON.stringify( payload )} ${LOG_PREFIX}` );
-        //     } )
-        //     .catch( error => console.log( `${LOG_PREFIX} ${error.message} ${LOG_PREFIX}` ) );
-
         this.props.dispatch( actions.saveNewDeckStart( this.state.newDeckName ) );
     }
 
