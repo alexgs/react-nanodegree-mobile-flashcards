@@ -1,10 +1,14 @@
 import Immutable from 'immutable';
+import { ACTIONS } from '../constants';
 
-const decksDefaultState = Immutable.Map();
+const deckMetadataDefaultState = Immutable.Map();
 
-export default decksReducer = function decksReducerFunction( state=decksDefaultState, action ) {
+export default function deckMetadataReducerFunction( state=deckMetadataDefaultState, action ) {
     switch( action.type ) {
+        case ACTIONS.DECKS.SAVE_NEW.COMPLETE:
+            const data = action.data;
+            return state.set( data.id, data );
         default:
             return state;
     }
-};
+}

@@ -5,7 +5,7 @@ import { thunkErrorHandlerFactory } from '../utils';
 
 function saveNewDeckEnd( data ) {
     return {
-        type: ACTIONS.DECKS.SAVE_NEW.END,
+        type: ACTIONS.DECKS.SAVE_NEW.COMPLETE,
         data
     };
 }

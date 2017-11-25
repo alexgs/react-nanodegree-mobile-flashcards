@@ -1,8 +1,8 @@
 export const ACTIONS = {
     DECKS: {
         SAVE_NEW: {
-            END: 'actions.save-new-deck.end',
-            START: 'actions.save-new-deck.start'
+            COMPLETE: 'actions.save-new-deck.complete'
+            // , START: 'actions.save-new-deck.start'
         }
     },
     PLACEHOLDER: 'placeholder-dummy'
