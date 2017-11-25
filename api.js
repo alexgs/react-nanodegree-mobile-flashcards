@@ -17,8 +17,11 @@ const emptyAsyncData = _.mapValues( {
 }, JSON.stringify );
 
 export const saveNewDeck = function( title ) {
-    AsyncStorage.getAllKeys()
+    const id = uuidGenerator();
+
+    return AsyncStorage.getAllKeys()
         .then( keys => {
+            // Retrieve all the data from AsyncStorage
             if ( keys.length > 0 ) {
                 return AsyncStorage.multiGet( keys );
             } else {
@@ -26,7 +29,7 @@ export const saveNewDeck = function( title ) {
             }
         } )
         .then( dataPairs => {
-            const id = uuidGenerator();
+            // Merge the new data into the data store
             const payload = { id, title };
             const newData = _.set( {}, [ STORE.DECK_METADATA, id ], payload );
 
@@ -37,17 +40,22 @@ export const saveNewDeck = function( title ) {
                 fp.mapValues( JSON.stringify ),
                 fp.toPairs
             )( dataPairs );
+
+            // Save the data
             return AsyncStorage.multiSet( data );
         } )
         .then( errors => {
+            // Handle errors or retrieve the new data
             if ( errors && errors.length > 0 ) {
-                throw new Error( errors );
+                const message = `${LOG_PREFIX} Error(s) saving data :: ${JSON.stringify( errors )}`;
+                throw new Error( message );
             } else {
-                AsyncStorage.getAllKeys()
-                    .then( keys => console.log( `${LOG_PREFIX} keys :: ${keys}` ) );
+                return AsyncStorage.getItem( STORE.DECK_METADATA );
             }
         } )
-        .catch( error => {
-            console.log( `${LOG_PREFIX} error message :: ${JSON.stringify(error.message)}` );
+        .then( json => {
+            // Return a Promise with just the new data
+            const data = _.get( JSON.parse( json ), id );
+            return Promise.resolve( { [id]: data } );
         } );
 };

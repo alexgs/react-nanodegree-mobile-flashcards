@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -43,6 +44,8 @@ const styles = StyleSheet.create( {
     }
 } );
 
+const LOG_PREFIX = '+-+';
+
 class NewDeckView extends PureComponent {
     constructor( props ) {
         super( props );
@@ -52,8 +55,14 @@ class NewDeckView extends PureComponent {
     }
 
     handleButtonPress() {
-        console.log( `+-+ New deck name: ${this.state.newDeckName} +-+` );
-        api.saveNewDeck( this.state.newDeckName );
+        console.log( `${LOG_PREFIX} New deck name: ${this.state.newDeckName} ${LOG_PREFIX}` );
+        api.saveNewDeck( this.state.newDeckName )
+            .then( newDeckData => {
+                const deckId = _.head( _.keys(newDeckData) );
+                const payload = newDeckData[ deckId ];
+                console.log( `${LOG_PREFIX} New deck saved :: ${deckId} -> ${JSON.stringify( payload )} ${LOG_PREFIX}` );
+            } )
+            .catch( error => console.log( `${LOG_PREFIX} ${error.message} ${LOG_PREFIX}` ) );
     }
 
     handleInputChange( text ) {
