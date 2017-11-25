@@ -18,13 +18,10 @@ export function loadDeckMetadataStart() {
     };
 }
 
-export function placeholder() {
+export function placeholder( data ) {
     return {
         type: ACTIONS.PLACEHOLDER,
-        data: {
-            id: 27,
-            foo: 'bar'
-        }
+        data: { id: data }
     };
 }
 

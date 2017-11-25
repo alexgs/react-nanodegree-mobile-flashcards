@@ -1,45 +1,17 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
+import DeckButton from './DeckButton';
 import * as actions from './actions';
 import { STORE } from '../constants';
 
-const styleConstants = {
-    buttonHorizontalPadding: 30,
-    buttonVerticalPadding: 10
-};
-
 const styles = StyleSheet.create( {
-    button: {
-        backgroundColor: 'purple',
-        marginTop: 15,
-        paddingTop: styleConstants.buttonVerticalPadding,
-        paddingBottom: styleConstants.buttonVerticalPadding,
-        paddingLeft: styleConstants.buttonHorizontalPadding,
-        paddingRight: styleConstants.buttonHorizontalPadding
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 18
-    },
     container: {
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: 'oldlace',
         flex: 1,
-        justifyContent: 'center'
-    },
-    label: {
-        fontSize: 30,
-        textAlign: 'center'
-    },
-    input: {
-        borderColor: 'gray',
-        borderWidth: 1,
-        fontSize: 24,
-        height: 40,
-        paddingLeft: 5,
-        paddingRight: 5,
-        width: '80%'
+        justifyContent: 'center',
+        paddingTop: 10
     }
 } );
 
@@ -53,17 +25,24 @@ class DeckListView extends PureComponent {
         this.props.dispatch( actions.loadDeckMetadataStart() );
     }
 
-    handleButtonPress() {
-        this.props.dispatch( actions.placeholder() );
+    handleButtonPress( deckId ) {
+        this.props.dispatch( actions.placeholder( deckId ) );
     }
 
     render() {
         const metadata = this.props[ STORE.DECK_METADATA ];
         const decks = metadata.asMutable()
             .sort( ( a, b ) => a.get( 'title' ).localeCompare( b.get( 'title' ) ) )
-            .map( data => <Text key={ data.get( 'id' ) }>{ data.get( 'title' ) }</Text> )
+            .map( data => (
+                <DeckButton
+                    key={ data.get( 'id' ) }
+                    deckId={ data.get( 'id' ) }
+                    pressHandler={ this.handleButtonPress }
+                    title={ data.get( 'title' ) }
+                />
+            ) )
             .toArray();
-        return ( <View>{ decks }</View> );
+        return ( <View style={ styles.container }>{ decks }</View> );
     }
 }
 
