@@ -48,6 +48,10 @@ class DeckListView extends PureComponent {
         this.handleButtonPress = this.handleButtonPress.bind( this );
     }
 
+    componentDidMount() {
+        this.props.dispatch( actions.loadDeckMetadataStart() );
+    }
+
     handleButtonPress() {
         this.props.dispatch( actions.placeholder() );
     }

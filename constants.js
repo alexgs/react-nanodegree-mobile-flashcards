@@ -1,9 +1,7 @@
 export const ACTIONS = {
     DECKS: {
-        SAVE_NEW: {
-            COMPLETE: 'actions.save-new-deck.complete'
-            // , START: 'actions.save-new-deck.start'
-        }
+        LOAD_METADATA: { COMPLETE: 'actions.load-deck-metadata.complete' },
+        SAVE_NEW: { COMPLETE: 'actions.save-new-deck.complete' }
     },
     PLACEHOLDER: 'placeholder-dummy'
 };

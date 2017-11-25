@@ -17,7 +17,22 @@ const emptyAsyncData = _.mapValues( {
     [STORE.DECK_METADATA]: {}
 }, JSON.stringify );
 
-export const saveNewDeck = function( title ) {
+export function getDeckMetaData() {
+    return AsyncStorage.getAllKeys()
+        .then( keys => {
+            if ( keys.includes( STORE.DECK_METADATA ) ) {
+                return AsyncStorage.getItem( STORE.DECK_METADATA );
+            } else {
+                // TODO Improve this?
+                return Promise.resolve( emptyAsyncData[ STORE.DECK_METADATA ] );
+            }
+        } )
+        .then( json => {
+            return Promise.resolve( JSON.parse( json ) );
+        } );
+}
+
+export function saveNewDeck ( title ) {
     const id = uuidGenerator();
 
     return AsyncStorage.getAllKeys()
@@ -59,4 +74,4 @@ export const saveNewDeck = function( title ) {
             const data = _.get( JSON.parse( json ), id );
             return Promise.resolve( data );
         } );
-};
+}
