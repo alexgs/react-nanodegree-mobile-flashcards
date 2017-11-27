@@ -23,7 +23,7 @@ class DeckListView extends PureComponent {
     }
 
     handleButtonPress( deckId ) {
-        this.props.dispatch( actions.placeholder( deckId ) );
+        this.props.navigation.navigate( 'Deck', { id: deckId } );
     }
 
     render() {

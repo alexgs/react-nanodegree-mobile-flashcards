@@ -6,7 +6,12 @@ class SingleDeckView extends PureComponent {
     static propTypes = {};
 
     render() {
-        return ( <View><Text>Single Deck View</Text></View> );
+        return (
+            <View>
+                <Text>Single Deck View</Text>
+                <Text>Deck ID: { this.props.navigation.state.params.id }</Text>
+            </View>
+        );
     }
 }
 
