@@ -1,20 +1,15 @@
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import DeckListView from '../Decks/ListView';
-import NewDeckView from '../Decks/NewDeckView';
+import MainScreen from './MainScreen';
+import SingleDeckView from '../Decks/SingleDeckView';
 
-const MainNavigator = TabNavigator( {
-    Decks: {
-        screen: DeckListView,
+const TopLevelNavigator = StackNavigator( {
+    Home: {
+        screen: MainScreen,
         navigationOptions: {
-            tabBarLabel: 'Decks'
+            header: null
         }
     },
-    NewDeck: {
-        screen: NewDeckView,
-        navigationOptions: {
-            tabBarLabel: 'New Deck'
-        }
-    }
+    Deck: { screen: SingleDeckView }
 } );
 
-export default MainNavigator;
+export default TopLevelNavigator;
