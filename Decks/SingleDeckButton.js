@@ -1,27 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-
-const styleConstants = {
-    buttonHorizontalPadding: 30,
-    buttonVerticalPadding: 5
-};
-
-const styles = StyleSheet.create( {
-    button: {
-        backgroundColor: 'plum',
-        marginTop: 15,
-        paddingTop: styleConstants.buttonVerticalPadding,
-        paddingBottom: styleConstants.buttonVerticalPadding,
-        paddingLeft: styleConstants.buttonHorizontalPadding,
-        paddingRight: styleConstants.buttonHorizontalPadding,
-        width: '80%'
-    },
-    buttonText: {
-        color: '#404040',
-        fontSize: 18
-    }
-} );
+import { Text, TouchableOpacity } from 'react-native';
+import sharedStyles from '../sharedStyles';
 
 class SingleDeckButton extends PureComponent {
     static propTypes = {
@@ -40,10 +20,9 @@ class SingleDeckButton extends PureComponent {
     }
 
     render() {
-        const { title } = this.props;
         return (
-            <TouchableOpacity onPress={ this.handleButtonPress } style={ styles.button }>
-                <Text style={ styles.buttonText }>{ this.props.text }</Text>
+            <TouchableOpacity onPress={ this.handleButtonPress } style={ sharedStyles.button }>
+                <Text style={ sharedStyles.buttonText }>{ this.props.text }</Text>
             </TouchableOpacity>
         );
     }

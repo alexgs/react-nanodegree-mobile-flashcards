@@ -1,27 +1,8 @@
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-
-const styleConstants = {
-    buttonHorizontalPadding: 30,
-    buttonVerticalPadding: 5
-};
-
-const styles = StyleSheet.create( {
-    button: {
-        backgroundColor: 'plum',
-        marginTop: 15,
-        paddingTop: styleConstants.buttonVerticalPadding,
-        paddingBottom: styleConstants.buttonVerticalPadding,
-        paddingLeft: styleConstants.buttonHorizontalPadding,
-        paddingRight: styleConstants.buttonHorizontalPadding,
-        width: '80%'
-    },
-    buttonText: {
-        color: '#404040',
-        fontSize: 18
-    }
-} );
+import { Text, TouchableOpacity } from 'react-native';
+import sharedStyles from '../sharedStyles';
 
 class DeckButton extends PureComponent {
     static propTypes = {
@@ -40,10 +21,10 @@ class DeckButton extends PureComponent {
     }
 
     render() {
-        const { title } = this.props;
+        const title = _.startCase( this.props.title );
         return (
-            <TouchableOpacity onPress={ this.handleButtonPress } style={ styles.button }>
-                <Text style={ styles.buttonText }>{ title }</Text>
+            <TouchableOpacity onPress={ this.handleButtonPress } style={ sharedStyles.button }>
+                <Text style={ sharedStyles.buttonText }>{ title }</Text>
             </TouchableOpacity>
         );
     }

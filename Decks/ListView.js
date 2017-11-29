@@ -4,13 +4,7 @@ import { connect } from 'react-redux';
 import DeckListButton from './DeckListButton';
 import * as actions from './actions';
 import { STORE } from '../constants';
-
-const styles = StyleSheet.create( {
-    container: {
-        alignItems: 'center',
-        paddingBottom: 15
-    }
-} );
+import sharedStyles from '../sharedStyles';
 
 class DeckListView extends PureComponent {
     constructor( props ) {
@@ -41,7 +35,7 @@ class DeckListView extends PureComponent {
             .toArray();
 
         return (
-            <ScrollView contentContainerStyle={ styles.container }>
+            <ScrollView contentContainerStyle={ sharedStyles.container }>
                 { decks }
             </ScrollView>
         );
