@@ -2,13 +2,33 @@ import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { STORE } from '../constants';
+import SingleDeckButton from './SingleDeckButton';
+import { ACTIONS, STORE } from '../constants';
 
 // TODO Add buttons
 // TODO Layout and styles
 
 class SingleDeckView extends PureComponent {
     static propTypes = {};
+
+    constructor( props ) {
+        super( props );
+        this.handleAddCardPress = this.handleAddCardPress.bind( this );
+        this.handleDeleteDeckPress = this.handleDeleteDeckPress.bind( this );
+        this.handleStartQuizPress = this.handleStartQuizPress.bind( this );
+    }
+
+    handleAddCardPress( deckId ) {
+        this.props.dispatch( { type: ACTIONS.PLACEHOLDER, data: deckId } );
+    }
+
+    handleDeleteDeckPress( deckId ) {
+        this.props.dispatch( { type: ACTIONS.PLACEHOLDER, data: deckId } );
+    }
+
+    handleStartQuizPress( deckId ) {
+        this.props.dispatch( { type: ACTIONS.PLACEHOLDER, data: deckId } );
+    }
 
     render() {
         const deckId = this.props.navigation.state.params.id;
@@ -21,6 +41,9 @@ class SingleDeckView extends PureComponent {
             <View>
                 <Text>{ deckMetadata.get( 'title' ) }</Text>
                 <Text>{ cardCount } { cardCountLabel }</Text>
+                <SingleDeckButton deckId={ deckId } pressHandler={ this.handleAddCardPress } text="Add Card" />
+                <SingleDeckButton deckId={ deckId } pressHandler={ this.handleStartQuizPress } text="Start Quiz" />
+                <SingleDeckButton deckId={ deckId } pressHandler={ this.handleDeleteDeckPress } text="Delete Deck" />
             </View>
         );
     }
@@ -28,8 +51,8 @@ class SingleDeckView extends PureComponent {
 
 function mapStateToProps( state ) {
     return {
-        [STORE.DECK_METADATA]: state.get( STORE.DECK_METADATA ),
-        [STORE.DECKS]: state.get( STORE.DECKS )
+        [ STORE.DECK_METADATA ]: state.get( STORE.DECK_METADATA ),
+        [ STORE.DECKS ]: state.get( STORE.DECKS )
     };
 }
 

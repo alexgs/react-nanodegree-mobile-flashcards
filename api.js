@@ -23,7 +23,6 @@ export function getDeckMetaData() {
             if ( keys.includes( STORE.DECK_METADATA ) ) {
                 return AsyncStorage.getItem( STORE.DECK_METADATA );
             } else {
-                // TODO Improve this?
                 return Promise.resolve( emptyAsyncData[ STORE.DECK_METADATA ] );
             }
         } )

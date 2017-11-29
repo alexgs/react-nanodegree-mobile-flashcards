@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import DeckButton from './DeckButton';
+import DeckListButton from './DeckListButton';
 import * as actions from './actions';
 import { STORE } from '../constants';
 
@@ -31,7 +31,7 @@ class DeckListView extends PureComponent {
         const decks = metadata.asMutable()
             .sort( ( a, b ) => a.get( 'title' ).localeCompare( b.get( 'title' ) ) )
             .map( data => (
-                <DeckButton
+                <DeckListButton
                     key={ data.get( 'id' ) }
                     deckId={ data.get( 'id' ) }
                     pressHandler={ this.handleButtonPress }

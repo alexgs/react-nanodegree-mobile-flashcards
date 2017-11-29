@@ -10,7 +10,7 @@ export function deckMetadataReducer( state=deckMetadataDefaultState, action ) {
             return Immutable.fromJS( action.data );
         case ACTIONS.DECKS.SAVE_NEW.COMPLETE:
             const data = Immutable.fromJS( action.data );
-            return state.set( data.id, data );
+            return state.set( data.get( 'id' ), data );
         default:
             return state;
     }
