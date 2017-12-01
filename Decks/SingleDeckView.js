@@ -1,13 +1,22 @@
+import {  } from 'expo';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import SingleDeckButton from './SingleDeckButton';
 import { ACTIONS, STORE } from '../constants';
 import sharedStyles from '../sharedStyles';
 
-// TODO Style Header
+const styles = StyleSheet.create( {
+    cardCount: {
+        fontSize: 30,
+        paddingTop: 10
+    },
+    title: {
+        fontSize: 48
+    }
+} );
 
 class SingleDeckView extends PureComponent {
     static propTypes = {};
@@ -38,11 +47,14 @@ class SingleDeckView extends PureComponent {
         const deckTitle = _.startCase( deckMetadata.get( 'title' ) );
         const cardCount = deckData ? deckData.size() : 0;
         const cardCountLabel = cardCount === 1 ? 'card' : 'cards';
+        const { height } = Dimensions.get('screen');
 
         return (
             <View style={ sharedStyles.container }>
-                <Text>{ deckTitle }</Text>
-                <Text>{ cardCount } { cardCountLabel }</Text>
+                <Text style={ [ styles.title, { paddingTop: height * 0.2 } ] }>{ deckTitle }</Text>
+                <Text style={ [ styles.cardCount, { paddingBottom: height * 0.1 } ] }>
+                    { cardCount } { cardCountLabel }
+                </Text>
                 <SingleDeckButton deckId={ deckId } pressHandler={ this.handleAddCardPress } text="Add Card" />
                 <SingleDeckButton deckId={ deckId } pressHandler={ this.handleStartQuizPress } text="Start Quiz" />
                 <SingleDeckButton deckId={ deckId } pressHandler={ this.handleDeleteDeckPress } text="Delete Deck" />

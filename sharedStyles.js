@@ -36,6 +36,10 @@ const styles = StyleSheet.create( {
         backgroundColor: 'oldlace',
         flex: 1,
         paddingBottom: 15
+    },
+
+    header: {
+        backgroundColor: colors.offwhite
     }
 
 } );
