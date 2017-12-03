@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import sharedStyles from '../sharedStyles';
+import { TouchableOpacity } from 'react-native';
+import sharedStyles from './styles';
 
 class SingleDeckButton extends PureComponent {
     static propTypes = {
-        deckId: PropTypes.string.isRequired,
-        pressHandler: PropTypes.func.isRequired,
-        text: PropTypes.string.isRequired
+        onPressFunction: PropTypes.func.isRequired,
+        payload: PropTypes.any
     };
 
     constructor( props ) {
@@ -16,13 +15,13 @@ class SingleDeckButton extends PureComponent {
     }
 
     handleButtonPress() {
-        this.props.pressHandler( this.props.deckId );
+        this.props.onPressFunction( this.props.payload );
     }
 
     render() {
         return (
             <TouchableOpacity onPress={ this.handleButtonPress } style={ sharedStyles.button }>
-                <Text style={ sharedStyles.buttonText }>{ this.props.text }</Text>
+                { this.props.children }
             </TouchableOpacity>
         );
     }

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Text, View } from 'react-native';
-import sharedStyles from '../Shared/sharedStyles';
+import sharedStyles from '../Shared/styles';
 
 class NewCardView extends PureComponent {
     static propTypes = {

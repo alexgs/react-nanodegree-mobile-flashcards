@@ -1,10 +1,11 @@
+import _ from 'lodash';
 import React, { PureComponent } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
-import DeckListButton from './DeckListButton';
 import * as actions from './actions';
+import Button from '../Shared/Button';
+import sharedStyles from '../Shared/styles';
 import { STORE } from '../constants';
-import sharedStyles from '../sharedStyles';
 
 class DeckListView extends PureComponent {
     constructor( props ) {
@@ -25,12 +26,13 @@ class DeckListView extends PureComponent {
         const decks = metadata.asMutable()
             .sort( ( a, b ) => a.get( 'title' ).localeCompare( b.get( 'title' ) ) )
             .map( data => (
-                <DeckListButton
+                <Button
                     key={ data.get( 'id' ) }
-                    deckId={ data.get( 'id' ) }
-                    pressHandler={ this.handleButtonPress }
-                    title={ data.get( 'title' ) }
-                />
+                    payload={ data.get( 'id' ) }
+                    onPressFunction={ this.handleButtonPress }
+                >
+                    <Text>{ _.startCase( data.get( 'title' ) ) }</Text>
+                </Button>
             ) )
             .toArray();
 

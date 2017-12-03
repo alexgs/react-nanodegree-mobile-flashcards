@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import SingleDeckButton from './SingleDeckButton';
+import Button from '../Shared/Button';
+import sharedStyles from '../Shared/styles';
 import { ACTIONS, STORE } from '../constants';
-import sharedStyles from '../sharedStyles';
 
 const styles = StyleSheet.create( {
     cardCount: {
@@ -55,9 +55,15 @@ class SingleDeckView extends PureComponent {
                 <Text style={ [ styles.cardCount, { paddingBottom: height * 0.1 } ] }>
                     { cardCount } { cardCountLabel }
                 </Text>
-                <SingleDeckButton deckId={ deckId } pressHandler={ this.handleAddCardPress } text="Add Card" />
-                <SingleDeckButton deckId={ deckId } pressHandler={ this.handleStartQuizPress } text="Start Quiz" />
-                <SingleDeckButton deckId={ deckId } pressHandler={ this.handleDeleteDeckPress } text="Delete Deck" />
+                <Button onPressFunction={ this.handleAddCardPress } payload={ deckId }>
+                    <Text style={ sharedStyles.buttonText }>Add Card</Text>
+                </Button>
+                <Button onPressFunction={ this.handleStartQuizPress } payload={ deckId }>
+                    <Text style={ sharedStyles.buttonText }>Start Quiz</Text>
+                </Button>
+                <Button onPressFunction={ this.handleDeleteDeckPress } payload={ deckId }>
+                    <Text style={ sharedStyles.buttonText }>Delete Deck</Text>
+                </Button>
             </View>
         );
     }
