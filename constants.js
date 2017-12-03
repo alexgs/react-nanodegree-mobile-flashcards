@@ -1,4 +1,7 @@
 export const ACTIONS = {
+    CARDS: {
+        SAVE_NEW: { COMPLETE: 'actions.save-new-card.complete' }
+    },
     DECKS: {
         LOAD_METADATA: { COMPLETE: 'actions.load-deck-metadata.complete' },
         SAVE_NEW: { COMPLETE: 'actions.save-new-deck.complete' }

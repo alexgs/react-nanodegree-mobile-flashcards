@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import * as actions from './actions';
 import Button from '../Shared/Button';
 import InputField from '../Shared/InputField';
 import sharedStyles from '../Shared/styles';
-import { connect } from 'react-redux';
 
 class NewCardView extends PureComponent {
     static propTypes = {
@@ -43,7 +44,14 @@ class NewCardView extends PureComponent {
     }
 
     handleSavePress() {
-        this.props.dispatch( { type: 'save-button-press' } );
+        const deckId = this.props.navigation.state.params.deckId;
+        const cardData = {
+            answer: this.state.answer,
+            deckId,
+            question: this.state.question
+        };
+        this.props.dispatch( actions.saveNewCardStart( cardData ) );
+        this.props.navigation.navigate( 'Deck', { deckId } );
     }
 
     render() {

@@ -53,7 +53,7 @@ class SingleDeckView extends PureComponent {
         const deckMetadata = this.props[ STORE.DECK_METADATA ].get( deckId );
         const deckData = this.props[ STORE.DECKS ].get( deckId );
         const deckTitle = _.startCase( deckMetadata.get( 'title' ) );
-        const cardCount = deckData ? deckData.size() : 0;
+        const cardCount = deckData ? deckData.size : 0;
         const cardCountLabel = cardCount === 1 ? 'card' : 'cards';
         const { height } = Dimensions.get('screen');
 

@@ -18,6 +18,11 @@ export function deckMetadataReducer( state=deckMetadataDefaultState, action ) {
 
 export function decksReducer( state=decksDefaultState, action ) {
     switch( action.type ) {
+        case ACTIONS.CARDS.SAVE_NEW.COMPLETE:
+            const { deckId } = action.data;
+            let cardList = state.get( deckId ) ? state.get( deckId ) : Immutable.List();
+            cardList = cardList.push( action.data );
+            return state.set( deckId, cardList );
         default:
             return state;
     }
