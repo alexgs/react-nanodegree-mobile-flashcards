@@ -6,12 +6,6 @@ import Button from '../Shared/Button';
 import InputField from '../Shared/InputField';
 import sharedStyles from '../Shared/styles';
 
-const styles = StyleSheet.create( {
-    container: {
-        justifyContent: 'center'
-    }
-} );
-
 class NewDeckView extends PureComponent {
     constructor( props ) {
         super( props );
@@ -30,7 +24,7 @@ class NewDeckView extends PureComponent {
 
     render() {
         return (
-            <View style={ [ sharedStyles.container, styles.container ] }>
+            <View style={ [ sharedStyles.container, sharedStyles.containerVerticalCenter ] }>
                 <Text style={ sharedStyles.inputLabel }>
                     What is the title of your new deck?
                 </Text>
