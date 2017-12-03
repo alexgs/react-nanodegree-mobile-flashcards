@@ -2,7 +2,7 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation'
 import MainScreen from './MainScreen';
 import NewCardView from '../Cards/NewCardView';
-import QuizView from '../Cards/QuizView';
+import QuizView from '../Quiz/QuizView';
 import SingleDeckView from '../Decks/SingleDeckView';
 import { SCREENS } from '../constants';
 
