@@ -1,14 +1,13 @@
-import {  } from 'expo';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from './actions';
-import BackButton from '../Shared/HeaderBackButton';
 import Button from '../Shared/Button';
+import BackButton from '../Shared/HeaderBackButton';
 import sharedStyles from '../Shared/styles';
-import { STORE } from '../constants';
+import { SCREENS, STORE } from '../constants';
 
 const styles = StyleSheet.create( {
     cardCount: {
@@ -23,7 +22,7 @@ const styles = StyleSheet.create( {
 class SingleDeckView extends PureComponent {
     static navigationOptions = function( props ) {
         return {
-            headerLeft: <BackButton navigation={ props.navigation } navigationTarget="Home" />,
+            headerLeft: <BackButton navigation={ props.navigation } navigationTarget={ SCREENS.DECK_LIST } />,
             headerStyle: sharedStyles.header
         };
     };
@@ -46,18 +45,18 @@ class SingleDeckView extends PureComponent {
     }
 
     handleAddCardPress( deckId ) {
-        this.props.navigation.navigate( 'NewCard', { deckId } );
+        this.props.navigation.navigate( SCREENS.NEW_CARD, { deckId } );
     }
 
     handleDeleteDeckPress( deckId ) {
         const deckMetadata = this.props[ STORE.DECK_METADATA ].get( deckId );
         const deckTitle = getDeckTitle( deckId, deckMetadata );
         this.props.dispatch( actions.deleteDeckStart( deckId, deckTitle ) );
-        this.props.navigation.navigate( 'Home' );
+        this.props.navigation.navigate( SCREENS.DECK_LIST );
     }
 
     handleStartQuizPress( deckId ) {
-        this.props.navigation.navigate( 'Quiz', { deckId } );
+        this.props.navigation.navigate( SCREENS.QUIZ, { deckId } );
     }
 
     componentDidMount() {

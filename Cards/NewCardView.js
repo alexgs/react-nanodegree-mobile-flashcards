@@ -6,6 +6,7 @@ import * as actions from './actions';
 import Button from '../Shared/Button';
 import InputField from '../Shared/InputField';
 import sharedStyles from '../Shared/styles';
+import { SCREENS } from '../constants';
 
 class NewCardView extends PureComponent {
     static propTypes = {
@@ -36,7 +37,7 @@ class NewCardView extends PureComponent {
 
     handleCancelPress() {
         const deckId = this.props.navigation.state.params.deckId;
-        this.props.navigation.navigate( 'Deck', { deckId } );
+        this.props.navigation.navigate( SCREENS.SINGLE_DECK, { deckId } );
     }
 
     handleQuestionInput( text ) {
@@ -51,7 +52,7 @@ class NewCardView extends PureComponent {
             question: this.state.question
         };
         this.props.dispatch( actions.saveNewCardStart( cardData ) );
-        this.props.navigation.navigate( 'Deck', { deckId } );
+        this.props.navigation.navigate( SCREENS.SINGLE_DECK, { deckId } );
     }
 
     render() {

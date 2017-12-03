@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './actions';
 import Button from '../Shared/Button';
 import sharedStyles from '../Shared/styles';
-import { STORE } from '../constants';
+import { SCREENS, STORE } from '../constants';
 
 class DeckListView extends PureComponent {
     constructor( props ) {
@@ -18,7 +18,7 @@ class DeckListView extends PureComponent {
     }
 
     handleButtonPress( deckId ) {
-        this.props.navigation.navigate( 'Deck', { deckId } );
+        this.props.navigation.navigate( SCREENS.SINGLE_DECK, { deckId } );
     }
 
     render() {

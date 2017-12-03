@@ -5,6 +5,7 @@ import * as actions from './actions';
 import Button from '../Shared/Button';
 import InputField from '../Shared/InputField';
 import sharedStyles from '../Shared/styles';
+import { SCREENS } from '../constants';
 
 class NewDeckView extends PureComponent {
     constructor( props ) {
@@ -16,13 +17,13 @@ class NewDeckView extends PureComponent {
 
     handleButtonPress() {
         this.props.dispatch( actions.saveNewDeckStart( this.state.newDeckName ) );
+        this.props.navigation.navigate( SCREENS.DECK_LIST );
     }
 
     handleInputChange( text ) {
         this.setState( { newDeckName: text } );
     }
 
-    // TODO Navigate to Deck List View after submitting the form
     render() {
         return (
             <View style={ [ sharedStyles.container, sharedStyles.containerVerticalCenter ] }>
