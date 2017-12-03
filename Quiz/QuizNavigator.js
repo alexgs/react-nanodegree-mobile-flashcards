@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import AnswerCard from './AnswerCard';
 import QuestionCard from './QuestionCard';
 import sharedStyles from '../Shared/styles';
 import { STORE } from '../constants';
+import BaseCard from './BaseCard';
 
 class QuizNavigator extends PureComponent {
     static propTypes = {
@@ -69,17 +70,49 @@ class QuizNavigator extends PureComponent {
 
         const deckId = this.props.navigation.state.params.deckId;
         const cardList = this.props[ STORE.DECKS ].get( deckId );
-        const cardData = cardList.get( currentPosition );
-        const card = showAnswer
-            ? <AnswerCard text={ cardData.get( 'answer' ) } />
-            : <QuestionCard showAnswerFunction={ this.handleShowAnswerPress } text={ cardData.get( 'question' ) } />;
 
+        let card = null;
+        if ( currentPosition < cardList.size ) {
+            const cardData = cardList.get( currentPosition );
+            card = showAnswer
+                ? getAnswerCard( this.handleRecordAnswerPress, cardData.get( 'answer' ) )
+                : getQuestionCard( this.handleShowAnswerPress, cardData.get( 'question' ) );
+        } else {
+            card = getFinalCard( this.state.correctAnswerCount, this.state.totalAnswerCount );
+        }
         return (
             <View style={ sharedStyles.container }>
                 { card }
             </View>
         );
     }
+}
+
+function getAnswerCard( recordAnswerFunction, answerText ) {
+    return (
+        <AnswerCard
+            answerText={ answerText }
+            recordAnswerFunction={ recordAnswerFunction }
+        />
+    );
+}
+
+function getFinalCard( correctCount, totalCount ) {
+    return (
+        <BaseCard text="Your Results!">
+            <Text>Correct: {correctCount}</Text>
+            <Text>Total: {totalCount}</Text>
+        </BaseCard>
+    );
+}
+
+function getQuestionCard( showAnswerFunction, questionText ) {
+    return (
+        <QuestionCard
+            showAnswerFunction={ showAnswerFunction }
+            questionText={ questionText }
+        />
+    );
 }
 
 function mapStateToProps( state ) {
