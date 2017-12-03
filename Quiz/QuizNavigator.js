@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import AnswerCard from './QuizCardAnswer';
-import QuestionCard from './QuizCardQuestion';
+import AnswerCard from './AnswerCard';
+import QuestionCard from './QuestionCard';
 import sharedStyles from '../Shared/styles';
 import { STORE } from '../constants';
 
-class QuizView extends PureComponent {
+class QuizNavigator extends PureComponent {
     static propTypes = {
         navigation: PropTypes.shape( {
             state: PropTypes.shape( {
@@ -68,4 +68,4 @@ function mapStateToProps( state ) {
     };
 }
 
-export default connect( mapStateToProps )( QuizView );
+export default connect( mapStateToProps )( QuizNavigator );

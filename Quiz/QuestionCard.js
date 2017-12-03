@@ -4,7 +4,7 @@ import { Dimensions, ScrollView, View, Text } from 'react-native';
 import Button from '../Shared/Button';
 import sharedStyles from '../Shared/styles';
 
-class QuizCardQuestion extends React.PureComponent {
+class QuestionCard extends React.PureComponent {
     static propTypes = {
         showAnswerFunction: PropTypes.func.isRequired,
         text: PropTypes.string.isRequired
@@ -35,4 +35,4 @@ class QuizCardQuestion extends React.PureComponent {
     }
 }
 
-export default QuizCardQuestion;
+export default QuestionCard;
