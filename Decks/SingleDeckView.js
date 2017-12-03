@@ -19,7 +19,15 @@ const styles = StyleSheet.create( {
 } );
 
 class SingleDeckView extends PureComponent {
-    static propTypes = {};
+    static propTypes = {
+        navigation: PropTypes.shape( {
+            state: PropTypes.shape( {
+                params: PropTypes.shape( {
+                    deckId: PropTypes.string.isRequired
+                } )
+            } )
+        } )
+    };
 
     constructor( props ) {
         super( props );
@@ -41,7 +49,7 @@ class SingleDeckView extends PureComponent {
     }
 
     render() {
-        const deckId = this.props.navigation.state.params.id;
+        const deckId = this.props.navigation.state.params.deckId;
         const deckMetadata = this.props[ STORE.DECK_METADATA ].get( deckId );
         const deckData = this.props[ STORE.DECKS ].get( deckId );
         const deckTitle = _.startCase( deckMetadata.get( 'title' ) );

@@ -34,7 +34,8 @@ class NewCardView extends PureComponent {
     }
 
     handleCancelPress() {
-        this.props.dispatch( { type: 'cancel-button-press' } );
+        const deckId = this.props.navigation.state.params.deckId;
+        this.props.navigation.navigate( 'Deck', { deckId } );
     }
 
     handleQuestionInput( text ) {

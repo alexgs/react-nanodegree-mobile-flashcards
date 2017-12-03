@@ -18,7 +18,7 @@ class DeckListView extends PureComponent {
     }
 
     handleButtonPress( deckId ) {
-        this.props.navigation.navigate( 'Deck', { id: deckId } );
+        this.props.navigation.navigate( 'Deck', { deckId } );
     }
 
     render() {
