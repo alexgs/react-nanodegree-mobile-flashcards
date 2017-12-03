@@ -27,8 +27,8 @@ class DeckListView extends PureComponent {
             .sort( ( a, b ) => a.get( 'title' ).localeCompare( b.get( 'title' ) ) )
             .map( data => (
                 <Button
-                    key={ data.get( 'id' ) }
-                    payload={ data.get( 'id' ) }
+                    key={ data.get( 'deckId' ) }
+                    payload={ data.get( 'deckId' ) }
                     onPressFunction={ this.handleButtonPress }
                 >
                     <Text>{ _.startCase( data.get( 'title' ) ) }</Text>

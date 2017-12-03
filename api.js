@@ -1,21 +1,15 @@
 import _ from 'lodash';
 import uuidGenerator from 'uuid/v4';
 import { AsyncStorage } from 'react-native';
-import { ERROR_SOURCES, STORE } from './constants';
-import * as utils from './utils';
+import { ASYNC_TYPES } from './constants';
 
+import filter from 'lodash/fp/filter';
 import flow from 'lodash/fp/flow';
 import fromPairs from 'lodash/fp/fromPairs';
+import map from 'lodash/fp/map';
 import mapValues from 'lodash/fp/mapValues';
-import merge from 'lodash/fp/merge';
-import toPairs from 'lodash/fp/toPairs';
-const fp = { flow, fromPairs, mapValues, merge, toPairs };
-
-const LOG_PREFIX = '{-}';
-
-const emptyAsyncData = _.mapValues( {
-    [STORE.DECK_METADATA]: {}
-}, JSON.stringify );
+import pickBy from 'lodash/fp/pickBy';
+const fp = { filter, flow, fromPairs, map, mapValues, pickBy };
 
 export function getDeckMetaData() {
     return AsyncStorage.getAllKeys()
@@ -31,46 +25,38 @@ export function getDeckMetaData() {
         } );
 }
 
-export function saveNewDeck ( title ) {
-    const id = uuidGenerator();
-
+export function loadDeckMetaData() {
     return AsyncStorage.getAllKeys()
-        .then( keys => {
-            // Retrieve all the data from AsyncStorage
-            if ( keys.length > 0 ) {
-                return AsyncStorage.multiGet( keys );
-            } else {
-                return Promise.resolve( _.toPairs( emptyAsyncData ) );
-            }
-        } )
-        .then( dataPairs => {
-            // Merge the new data into the data store
-            const payload = { id, title };
-            const newData = _.set( {}, [ STORE.DECK_METADATA, id ], payload );
-
-            const data = fp.flow(
+        .then( keys => AsyncStorage.multiGet( keys ) )
+        .then( records => {
+            const metadata = fp.flow(
                 fp.fromPairs,
-                fp.mapValues( JSON.parse ),
-                fp.merge( newData ),
-                fp.mapValues( JSON.stringify ),
-                fp.toPairs
-            )( dataPairs );
+                fp.mapValues( record => JSON.parse( record ) ),
+                fp.pickBy( record => record.type === ASYNC_TYPES.DECK_METADATA )
+            )( records );
 
-            // Save the data
-            return AsyncStorage.multiSet( data );
-        } )
-        .then( errors => {
-            // Handle errors or retrieve the new data
-            if ( errors && errors.length > 0 ) {
-                const message = `${LOG_PREFIX} Error(s) saving data :: ${JSON.stringify( errors )}`;
-                throw utils.errorFactory( message, ERROR_SOURCES.API );
-            } else {
-                return AsyncStorage.getItem( STORE.DECK_METADATA );
-            }
-        } )
-        .then( json => {
-            // Return a Promise with just the new data
-            const data = _.get( JSON.parse( json ), id );
-            return Promise.resolve( data );
+            return Promise.resolve( metadata );
         } );
+}
+
+export function saveNewCard( cardData ) {
+    // `cardData` has 3 fields: deckId, question, answer
+    const id = uuidGenerator();
+    const payload = _.merge( {}, cardData, {
+        type: ASYNC_TYPES.CARD,
+        cardId: id
+    } );
+    return AsyncStorage.setItem( id, JSON.stringify( payload ) )
+        .then( () => Promise.resolve( payload ) );
+}
+
+export function saveNewDeck( title ) {
+    const id = uuidGenerator();
+    const payload =  {
+        type: ASYNC_TYPES.DECK_METADATA,
+        deckId: id,
+        title
+    };
+    return AsyncStorage.setItem( id, JSON.stringify( payload ) )
+        .then( () => Promise.resolve( payload ) );
 }

@@ -22,6 +22,7 @@ class NewDeckView extends PureComponent {
         this.setState( { newDeckName: text } );
     }
 
+    // TODO Navigate to Deck List View after submitting the form
     render() {
         return (
             <View style={ [ sharedStyles.container, sharedStyles.containerVerticalCenter ] }>
