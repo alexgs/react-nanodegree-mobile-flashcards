@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "jest-expo": "^22.0.0",
+    "react-devtools": "^3.0.0",
     "react-native-scripts": "1.7.0",
     "react-test-renderer": "16.0.0-beta.5"
   },
@@ -20,7 +21,7 @@
   },
   "dependencies": {
     "expo": "^22.0.2",
-    "immutable": "^3.8.1",
+    "immutable": "^3.8.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react": "16.0.0-beta.5",

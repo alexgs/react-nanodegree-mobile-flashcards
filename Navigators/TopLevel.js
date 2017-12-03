@@ -1,8 +1,8 @@
+import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import MainScreen from './MainScreen';
 import NewCardView from '../Cards/NewCardView';
 import SingleDeckView from '../Decks/SingleDeckView';
-import sharedStyles from '../Shared/styles';
 
 // TODO [Future] Integrate "React Navigation" with Redux[1] ([example][2])
 // [1]: https://reactnavigation.org/docs/guides/redux
@@ -16,10 +16,7 @@ const TopLevelNavigator = StackNavigator( {
         }
     },
     Deck: {
-        screen: SingleDeckView,
-        navigationOptions: {
-            headerStyle: sharedStyles.header
-        }
+        screen: SingleDeckView
     },
     NewCard: {
         screen: NewCardView,

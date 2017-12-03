@@ -5,6 +5,7 @@ import React, { PureComponent } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from './actions';
+import BackButton from '../Shared/HeaderBackButton';
 import Button from '../Shared/Button';
 import sharedStyles from '../Shared/styles';
 import { STORE } from '../constants';
@@ -20,6 +21,13 @@ const styles = StyleSheet.create( {
 } );
 
 class SingleDeckView extends PureComponent {
+    static navigationOptions = function( props ) {
+        return {
+            headerLeft: <BackButton navigation={ props.navigation } navigationTarget="Home" />,
+            headerStyle: sharedStyles.header
+        };
+    };
+
     static propTypes = {
         navigation: PropTypes.shape( {
             state: PropTypes.shape( {
@@ -42,7 +50,10 @@ class SingleDeckView extends PureComponent {
     }
 
     handleDeleteDeckPress( deckId ) {
-        this.props.dispatch( { type: 'placeholder.delete-deck', data: deckId } );
+        this.props.navigation.navigate( 'Home' );
+        const deckMetadata = this.props[ STORE.DECK_METADATA ].get( deckId );
+        const deckTitle = getDeckTitle( deckId, deckMetadata );
+        this.props.dispatch( actions.deleteDeckStart( deckId, deckTitle ) );
     }
 
     handleStartQuizPress( deckId ) {
@@ -57,9 +68,9 @@ class SingleDeckView extends PureComponent {
     render() {
         const deckId = this.props.navigation.state.params.deckId;
         const deckMetadata = this.props[ STORE.DECK_METADATA ].get( deckId );
-        const deckData = this.props[ STORE.DECKS ].get( deckId );
-        const deckTitle = _.startCase( deckMetadata.get( 'title' ) );
-        const cardCount = deckData ? deckData.size : 0;
+        const cardList = this.props[ STORE.DECKS ].get( deckId );
+        const deckTitle = getDeckTitle( deckId, deckMetadata );
+        const cardCount = cardList ? cardList.size : 0;
         const cardCountLabel = cardCount === 1 ? 'card' : 'cards';
         const { height } = Dimensions.get('screen');
 
@@ -81,6 +92,10 @@ class SingleDeckView extends PureComponent {
             </View>
         );
     }
+}
+
+function getDeckTitle( deckId, metadata ) {
+    return _.startCase( metadata.get( 'title' ) );
 }
 
 function mapStateToProps( state ) {
