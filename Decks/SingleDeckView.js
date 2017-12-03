@@ -57,7 +57,7 @@ class SingleDeckView extends PureComponent {
     }
 
     handleStartQuizPress( deckId ) {
-        this.props.dispatch( { type: 'placeholder.start-quiz', data: deckId } );
+        this.props.navigation.navigate( 'Quiz', { deckId } );
     }
 
     componentDidMount() {

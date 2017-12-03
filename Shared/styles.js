@@ -31,6 +31,11 @@ const styles = StyleSheet.create( {
         textAlign: 'center'
     },
 
+    quizText: {
+        fontSize: 24,
+        textAlign: 'center'
+    }
+
 } );
 
 export default styles;
