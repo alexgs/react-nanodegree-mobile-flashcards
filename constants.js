@@ -25,7 +25,10 @@ export const SCREENS = {
     NEW_DECK: 'screens.new-deck',
     SINGLE_DECK: 'screens.single-deck',
     NEW_CARD: 'screens.new-card',
-    QUIZ: 'screens.quiz'
+    QUIZ: {
+        START: 'screens.quiz-start',
+        CARDS: 'screens.quiz-cards'
+    }
 };
 
 export const STORE = {

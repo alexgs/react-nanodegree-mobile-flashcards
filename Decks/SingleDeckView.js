@@ -56,7 +56,7 @@ class SingleDeckView extends PureComponent {
     }
 
     handleStartQuizPress( deckId ) {
-        this.props.navigation.navigate( SCREENS.QUIZ, { deckId } );
+        this.props.navigation.navigate( SCREENS.QUIZ.START, { deckId } );
     }
 
     componentDidMount() {

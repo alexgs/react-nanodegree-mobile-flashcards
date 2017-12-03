@@ -3,6 +3,7 @@ import { StackNavigator } from 'react-navigation'
 import MainScreen from './MainScreen';
 import NewCardView from '../Cards/NewCardView';
 import SingleDeckView from '../Decks/SingleDeckView';
+import QuizNavigator from '../Quiz/QuizNavigator';
 import QuizView from '../Quiz/QuizView';
 import { SCREENS } from '../constants';
 
@@ -27,8 +28,8 @@ const TopLevelNavigator = StackNavigator(
                 header: null
             }
         },
-        [ SCREENS.QUIZ ]: {
-            screen: QuizView,
+        [ SCREENS.QUIZ.START ]: {
+            screen: QuizNavigator,
             navigationOptions: {
                 header: null
             }
