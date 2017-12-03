@@ -5,7 +5,7 @@ const styleConstants = {
     buttonVerticalPadding: 5
 };
 
-const colors = {
+export const colors = {
     darkgrey: '#484848',
     offwhite: '#F6F6F6'
 };
@@ -40,7 +40,12 @@ const styles = StyleSheet.create( {
 
     header: {
         backgroundColor: colors.offwhite
-    }
+    },
+
+    inputLabel: {
+        fontSize: 30,
+        textAlign: 'center'
+    },
 
 } );
 
