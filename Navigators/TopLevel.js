@@ -1,20 +1,29 @@
+import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import DeckListView from '../Decks/ListView';
-import NewDeckView from '../Decks/NewDeckView';
+import MainScreen from './MainScreen';
+import NewCardView from '../Cards/NewCardView';
+import SingleDeckView from '../Decks/SingleDeckView';
 
-const MainNavigator = TabNavigator( {
-    Decks: {
-        screen: DeckListView,
+// TODO [Future] Integrate "React Navigation" with Redux[1] ([example][2])
+// [1]: https://reactnavigation.org/docs/guides/redux
+// [2]: https://github.com/react-community/react-navigation/tree/master/examples/ReduxExample
+
+const TopLevelNavigator = StackNavigator( {
+    Home: {
+        screen: MainScreen,
         navigationOptions: {
-            tabBarLabel: 'Decks'
+            header: null
         }
     },
-    NewDeck: {
-        screen: NewDeckView,
+    Deck: {
+        screen: SingleDeckView
+    },
+    NewCard: {
+        screen: NewCardView,
         navigationOptions: {
-            tabBarLabel: 'New Deck'
+            header: null
         }
     }
 } );
 
-export default MainNavigator;
+export default TopLevelNavigator;

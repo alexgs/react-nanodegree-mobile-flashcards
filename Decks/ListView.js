@@ -1,16 +1,11 @@
+import _ from 'lodash';
 import React, { PureComponent } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
-import DeckButton from './DeckButton';
 import * as actions from './actions';
+import Button from '../Shared/Button';
+import sharedStyles from '../Shared/styles';
 import { STORE } from '../constants';
-
-const styles = StyleSheet.create( {
-    container: {
-        alignItems: 'center',
-        paddingBottom: 15
-    }
-} );
 
 class DeckListView extends PureComponent {
     constructor( props ) {
@@ -23,7 +18,7 @@ class DeckListView extends PureComponent {
     }
 
     handleButtonPress( deckId ) {
-        this.props.dispatch( actions.placeholder( deckId ) );
+        this.props.navigation.navigate( 'Deck', { deckId } );
     }
 
     render() {
@@ -31,17 +26,18 @@ class DeckListView extends PureComponent {
         const decks = metadata.asMutable()
             .sort( ( a, b ) => a.get( 'title' ).localeCompare( b.get( 'title' ) ) )
             .map( data => (
-                <DeckButton
-                    key={ data.get( 'id' ) }
-                    deckId={ data.get( 'id' ) }
-                    pressHandler={ this.handleButtonPress }
-                    title={ data.get( 'title' ) }
-                />
+                <Button
+                    key={ data.get( 'deckId' ) }
+                    payload={ data.get( 'deckId' ) }
+                    onPressFunction={ this.handleButtonPress }
+                >
+                    <Text>{ _.startCase( data.get( 'title' ) ) }</Text>
+                </Button>
             ) )
             .toArray();
 
         return (
-            <ScrollView contentContainerStyle={ styles.container }>
+            <ScrollView contentContainerStyle={ sharedStyles.container }>
                 { decks }
             </ScrollView>
         );

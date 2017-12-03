@@ -4,18 +4,16 @@ import { connect } from 'react-redux';
 
 class QuizView extends PureComponent {
     render() {
-        // console.log( JSON.stringify( this.props, null, 2 ) );
         return (
             <View>
-                <Text>Hello { this.props.hello }!</Text>
-                <Text>QUIZ</Text>
+                <Text>Quiz View</Text>
             </View>
         );
     }
 }
 
 function mapStateToProps( state ) {
-    return { hello: state.getIn( [ 'foo', 'hello' ] ) };
+    return {  };
 }
 
 export default connect( mapStateToProps )( QuizView );
