@@ -50,10 +50,10 @@ class SingleDeckView extends PureComponent {
     }
 
     handleDeleteDeckPress( deckId ) {
-        this.props.navigation.navigate( 'Home' );
         const deckMetadata = this.props[ STORE.DECK_METADATA ].get( deckId );
         const deckTitle = getDeckTitle( deckId, deckMetadata );
         this.props.dispatch( actions.deleteDeckStart( deckId, deckTitle ) );
+        this.props.navigation.navigate( 'Home' );
     }
 
     handleStartQuizPress( deckId ) {
@@ -69,6 +69,12 @@ class SingleDeckView extends PureComponent {
         const deckId = this.props.navigation.state.params.deckId;
         const deckMetadata = this.props[ STORE.DECK_METADATA ].get( deckId );
         const cardList = this.props[ STORE.DECKS ].get( deckId );
+
+        // Abort if we don't have critical data (maybe because we just deleted it)
+        if ( !deckMetadata || !cardList ) {
+            return null;
+        }
+
         const deckTitle = getDeckTitle( deckId, deckMetadata );
         const cardCount = cardList ? cardList.size : 0;
         const cardCountLabel = cardCount === 1 ? 'card' : 'cards';
