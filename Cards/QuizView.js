@@ -24,7 +24,8 @@ class QuizView extends PureComponent {
         this.state = {
             currentPosition: null,
             showAnswer: null
-        }
+        };
+        this.handleShowAnswerPress = this.handleShowAnswerPress.bind( this );
     }
 
     componentDidMount() {
@@ -32,6 +33,10 @@ class QuizView extends PureComponent {
             currentPosition: 0,
             showAnswer: false
         } );
+    }
+
+    handleShowAnswerPress() {
+        this.setState( { showAnswer: true } );
     }
 
     render() {
@@ -47,7 +52,7 @@ class QuizView extends PureComponent {
         const cardData = cardList.get( currentPosition );
         const card = showAnswer
             ? <AnswerCard text={ cardData.get( 'answer' ) } />
-            : <QuestionCard text={ cardData.get( 'question' ) } />;
+            : <QuestionCard showAnswerFunction={ this.handleShowAnswerPress } text={ cardData.get( 'question' ) } />;
 
         return (
             <View style={ sharedStyles.container }>
