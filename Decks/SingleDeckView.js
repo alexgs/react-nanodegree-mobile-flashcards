@@ -29,7 +29,7 @@ class SingleDeckView extends PureComponent {
     }
 
     handleAddCardPress( deckId ) {
-        this.props.dispatch( { type: ACTIONS.PLACEHOLDER, data: deckId } );
+        this.props.navigation.navigate( 'NewCard', { deckId } );
     }
 
     handleDeleteDeckPress( deckId ) {
