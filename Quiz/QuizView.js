@@ -9,7 +9,7 @@ import sharedStyles from '../Shared/styles';
 import { STORE } from '../constants';
 import BaseCard from './BaseCard';
 
-class QuizNavigator extends PureComponent {
+class QuizView extends PureComponent {
     static propTypes = {
         navigation: PropTypes.shape( {
             state: PropTypes.shape( {
@@ -121,4 +121,4 @@ function mapStateToProps( state ) {
     };
 }
 
-export default connect( mapStateToProps )( QuizNavigator );
+export default connect( mapStateToProps )( QuizView );

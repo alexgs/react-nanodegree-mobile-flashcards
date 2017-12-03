@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation'
 import MainScreen from './MainScreen';
 import NewCardView from '../Cards/NewCardView';
 import SingleDeckView from '../Decks/SingleDeckView';
-import QuizNavigator from '../Quiz/QuizNavigator';
+import QuizView from '../Quiz/QuizView';
 import { SCREENS } from '../constants';
 
 // TODO [Future] Integrate "React Navigation" with Redux[1] ([example][2])
@@ -28,7 +28,7 @@ const TopLevelNavigator = StackNavigator(
             }
         },
         [ SCREENS.QUIZ ]: {
-            screen: QuizNavigator,
+            screen: QuizView,
             navigationOptions: {
                 header: null
             }
