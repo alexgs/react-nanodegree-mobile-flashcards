@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
+import * as actions from './actions';
 import Button from '../Shared/Button';
 import sharedStyles from '../Shared/styles';
-import { ACTIONS, STORE } from '../constants';
+import { STORE } from '../constants';
 
 const styles = StyleSheet.create( {
     cardCount: {
@@ -41,11 +42,16 @@ class SingleDeckView extends PureComponent {
     }
 
     handleDeleteDeckPress( deckId ) {
-        this.props.dispatch( { type: ACTIONS.PLACEHOLDER, data: deckId } );
+        this.props.dispatch( { type: 'placeholder.delete-deck', data: deckId } );
     }
 
     handleStartQuizPress( deckId ) {
-        this.props.dispatch( { type: ACTIONS.PLACEHOLDER, data: deckId } );
+        this.props.dispatch( { type: 'placeholder.start-quiz', data: deckId } );
+    }
+
+    componentDidMount() {
+        const deckId = this.props.navigation.state.params.deckId;
+        this.props.dispatch( actions.loadCardsStart( deckId ) );
     }
 
     render() {

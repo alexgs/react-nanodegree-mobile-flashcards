@@ -2,6 +2,21 @@ import * as api from '../api';
 import { ACTIONS, ERROR_SOURCES } from '../constants';
 import { thunkErrorHandlerFactory } from '../utils';
 
+function loadCardsComplete( deckId, cardData ) {
+    return {
+        type: ACTIONS.DECKS.LOAD_CARDS.COMPLETE,
+        data: { cardData, deckId }
+    };
+}
+
+export function loadCardsStart( deckId ) {
+    return function( dispatch ) {
+        return api.loadCards( deckId )
+            .then( cardData => dispatch( loadCardsComplete( deckId, cardData ) ) )
+            .catch( thunkErrorHandlerFactory( ERROR_SOURCES.API ) );
+    }
+}
+
 function loadDeckMetadataComplete( data ) {
     return {
         type: ACTIONS.DECKS.LOAD_METADATA.COMPLETE,

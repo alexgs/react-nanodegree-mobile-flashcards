@@ -11,18 +11,18 @@ import mapValues from 'lodash/fp/mapValues';
 import pickBy from 'lodash/fp/pickBy';
 const fp = { filter, flow, fromPairs, map, mapValues, pickBy };
 
-export function getDeckMetaData() {
+export function loadCards( deckId ) {
     return AsyncStorage.getAllKeys()
-        .then( keys => {
-            if ( keys.includes( STORE.DECK_METADATA ) ) {
-                return AsyncStorage.getItem( STORE.DECK_METADATA );
-            } else {
-                return Promise.resolve( emptyAsyncData[ STORE.DECK_METADATA ] );
-            }
+        .then( keys => AsyncStorage.multiGet( keys ) )
+        .then( records => {
+            const cards = fp.flow(
+                fp.fromPairs,
+                fp.map( record => JSON.parse( record ) ),
+                fp.filter( record => record.type === ASYNC_TYPES.CARD && record.deckId === deckId )
+            )( records );
+
+            return Promise.resolve( cards );
         } )
-        .then( json => {
-            return Promise.resolve( JSON.parse( json ) );
-        } );
 }
 
 export function loadDeckMetaData() {
