@@ -22,16 +22,36 @@ class QuizNavigator extends PureComponent {
     constructor( props ) {
         super( props );
         this.state = {
+            correctAnswerCount: null,
             currentPosition: null,
-            showAnswer: null
+            showAnswer: null,
+            totalAnswerCount: null
         };
+        this.handleRecordAnswerPress = this.handleRecordAnswerPress.bind( this );
         this.handleShowAnswerPress = this.handleShowAnswerPress.bind( this );
     }
 
     componentDidMount() {
         this.setState( {
+            correctAnswerCount: 0,
             currentPosition: 0,
-            showAnswer: false
+            showAnswer: false,
+            totalAnswerCount: 0
+        } );
+    }
+
+    handleRecordAnswerPress( answeredCorrectly ) {
+        const prevCorrectCount = this.state.correctAnswerCount;
+        const newCorrectCount = answeredCorrectly ? prevCorrectCount + 1 : prevCorrectCount;
+
+        const newPosition = this.state.currentPosition + 1;
+        const newTotalCount = this.state.totalAnswerCount + 1;
+
+        this.setState( {
+            correctAnswerCount: newCorrectCount,
+            currentPosition: newPosition,
+            showAnswer: false,
+            totalAnswerCount: newTotalCount
         } );
     }
 
