@@ -8,6 +8,7 @@ import FinalCard from './FinalCard';
 import QuestionCard from './QuestionCard';
 import sharedStyles from '../Shared/styles';
 import { SCREENS, STORE } from '../constants';
+import * as utils from '../utils';
 
 const QUIZ_STORE = {
     CARD_LIST: 'quiz-store.card-list',
@@ -108,6 +109,10 @@ class QuizController extends React.PureComponent {
                 ? getAnswerCard( this.handleRecordAnswerPress, cardData.get( 'answer' ), questionsRemaining )
                 : getQuestionCard( this.handleShowAnswerPress, cardData.get( 'question' ), questionsRemaining );
         } else {
+            // The user has completed a deck of flashcards for today, so reset reminders
+            utils.clearLocalNotification()
+                .then( utils.setLocalNotification );
+
             const correctCount = quizStore.get( QUIZ_STORE.CORRECT_ANSWER_COUNT );
             const totalCount = quizStore.get( QUIZ_STORE.TOTAL_ANSWER_COUNT );
             card = (
