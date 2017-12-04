@@ -37,6 +37,7 @@ class QuizController extends React.PureComponent {
         };
         this.handleClosePress = this.handleClosePress.bind( this );
         this.handleRecordAnswerPress = this.handleRecordAnswerPress.bind( this );
+        this.handleRestartPress = this.handleRestartPress.bind( this );
         this.handleShowAnswerPress = this.handleShowAnswerPress.bind( this );
     }
 
@@ -77,6 +78,11 @@ class QuizController extends React.PureComponent {
         this.props.navigation.navigate( SCREENS.QUIZ.CARDS, { deckId, quizStore } );
     }
 
+    handleRestartPress() {
+        const { deckId } = this.state;
+        this.props.navigation.navigate( SCREENS.QUIZ.START, { deckId } );
+    }
+
     handleShowAnswerPress() {
         let { deckId, quizStore } = this.state;
         quizStore = quizStore.set( QUIZ_STORE.SHOW_ANSWER, true );
@@ -107,6 +113,7 @@ class QuizController extends React.PureComponent {
                 <FinalCard
                     closeFunction={ this.handleClosePress }
                     correctAnswerCount={ correctCount }
+                    restartFunction={ this.handleRestartPress }
                     totalAnswerCount={ totalCount }
                 />
             );

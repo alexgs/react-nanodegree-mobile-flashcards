@@ -9,16 +9,22 @@ class FinalCard extends React.PureComponent {
     static propTypes = {
         closeFunction: PropTypes.func.isRequired,
         correctAnswerCount: PropTypes.number.isRequired,
+        restartFunction: PropTypes.func.isRequired,
         totalAnswerCount: PropTypes.number.isRequired
     };
 
     constructor( props ) {
         super( props );
-        this.handleButtonPress = this.handleButtonPress.bind( this );
+        this.handleClosePress = this.handleClosePress.bind( this );
+        this.handleRestartPress = this.handleRestartPress.bind( this );
     }
 
-    handleButtonPress() {
+    handleClosePress() {
         this.props.closeFunction();
+    }
+
+    handleRestartPress() {
+        this.props.restartFunction();
     }
 
     render() {
@@ -35,8 +41,11 @@ class FinalCard extends React.PureComponent {
             <BaseCard text={ message }>
                 <Text>Correct: { correctAnswerCount }</Text>
                 <Text>Total: { totalAnswerCount }</Text>
-                <Button onPressFunction={ this.handleButtonPress }>
+                <Button onPressFunction={ this.handleClosePress }>
                     <Text style={ sharedStyles.buttonText }>Close</Text>
+                </Button>
+                <Button onPressFunction={ this.handleRestartPress }>
+                    <Text style={ sharedStyles.buttonText }>Restart</Text>
                 </Button>
             </BaseCard>
         );
