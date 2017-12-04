@@ -1,10 +1,10 @@
 import Immutable from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import AnswerCard from './AnswerCard';
-import BaseCard from './BaseCard';
+import FinalCard from './FinalCard';
 import QuestionCard from './QuestionCard';
 import sharedStyles from '../Shared/styles';
 import { SCREENS, STORE } from '../constants';
@@ -35,6 +35,7 @@ class QuizController extends React.PureComponent {
             deckId: null,
             quizStore: null
         };
+        this.handleClosePress = this.handleClosePress.bind( this );
         this.handleRecordAnswerPress = this.handleRecordAnswerPress.bind( this );
         this.handleShowAnswerPress = this.handleShowAnswerPress.bind( this );
     }
@@ -53,6 +54,11 @@ class QuizController extends React.PureComponent {
         this.setState( { deckId, quizStore } );
     }
 
+    handleClosePress() {
+        const { deckId } = this.state;
+        this.props.navigation.navigate( SCREENS.SINGLE_DECK, { deckId } );
+    }
+
     handleRecordAnswerPress( answeredCorrectly ) {
         let { deckId, quizStore } = this.state;
         const prevCorrectCount = quizStore.get( QUIZ_STORE.CORRECT_ANSWER_COUNT );
@@ -65,7 +71,7 @@ class QuizController extends React.PureComponent {
             .set( QUIZ_STORE.CORRECT_ANSWER_COUNT, newCorrectCount )
             .set( QUIZ_STORE.CURRENT_POSITION, newPosition )
             .set( QUIZ_STORE.SHOW_ANSWER, false )
-            .set( QUIZ_STORE.TOTAL_ANSWER_COUNT, newTotalCount)
+            .set( QUIZ_STORE.TOTAL_ANSWER_COUNT, newTotalCount )
             .asImmutable();
 
         this.props.navigation.navigate( SCREENS.QUIZ.CARDS, { deckId, quizStore } );
@@ -95,7 +101,15 @@ class QuizController extends React.PureComponent {
                 ? getAnswerCard( this.handleRecordAnswerPress, cardData.get( 'answer' ) )
                 : getQuestionCard( this.handleShowAnswerPress, cardData.get( 'question' ) );
         } else {
-            card = getFinalCard( this.state.correctAnswerCount, this.state.totalAnswerCount );
+            const correctCount = quizStore.get( QUIZ_STORE.CORRECT_ANSWER_COUNT );
+            const totalCount = quizStore.get( QUIZ_STORE.TOTAL_ANSWER_COUNT );
+            card = (
+                <FinalCard
+                    closeFunction={ this.handleClosePress }
+                    correctAnswerCount={ correctCount }
+                    totalAnswerCount={ totalCount }
+                />
+            );
         }
 
         return (
@@ -115,15 +129,6 @@ function getAnswerCard( recordAnswerFunction, answerText ) {
     );
 }
 
-function getFinalCard( correctCount, totalCount ) {
-    return (
-        <BaseCard text="Your Results!">
-            <Text>Correct: {correctCount}</Text>
-            <Text>Total: {totalCount}</Text>
-        </BaseCard>
-    );
-}
-
 function getQuestionCard( showAnswerFunction, questionText ) {
     return (
         <QuestionCard
@@ -135,11 +140,11 @@ function getQuestionCard( showAnswerFunction, questionText ) {
 
 function initializeQuizStore( deckId, deckData ) {
     const rawData = {
-        [QUIZ_STORE.CARD_LIST]: deckData.get( deckId ),
-        [QUIZ_STORE.CORRECT_ANSWER_COUNT]: 0,
-        [QUIZ_STORE.CURRENT_POSITION]: 0,
-        [QUIZ_STORE.SHOW_ANSWER]: false,
-        [QUIZ_STORE.TOTAL_ANSWER_COUNT]: 0
+        [ QUIZ_STORE.CARD_LIST ]: deckData.get( deckId ),
+        [ QUIZ_STORE.CORRECT_ANSWER_COUNT ]: 0,
+        [ QUIZ_STORE.CURRENT_POSITION ]: 0,
+        [ QUIZ_STORE.SHOW_ANSWER ]: false,
+        [ QUIZ_STORE.TOTAL_ANSWER_COUNT ]: 0
     };
     return Immutable.fromJS( rawData );
 }
