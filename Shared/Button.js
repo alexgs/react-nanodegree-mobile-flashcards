@@ -25,7 +25,7 @@ const styles = StyleSheet.create( {
     }
 } );
 
-class SingleDeckButton extends PureComponent {
+class Button extends PureComponent {
     static propTypes = {
         onPressFunction: PropTypes.func.isRequired,
         payload: PropTypes.any
@@ -49,4 +49,4 @@ class SingleDeckButton extends PureComponent {
     }
 }
 
-export default SingleDeckButton;
+export default Button;
