@@ -91,14 +91,13 @@ export function saveNewCard( cardData ) {
         .then( () => Promise.resolve( payload ) );
 }
 
-export function saveNewDeck( title ) {
-    const id = uuidGenerator();
+export function saveNewDeck( title, deckId ) {
     const payload =  {
         type: ASYNC_TYPES.DECK_METADATA,
-        deckId: id,
+        deckId,
         title
     };
-    return AsyncStorage.setItem( id, JSON.stringify( payload ) )
+    return AsyncStorage.setItem( deckId, JSON.stringify( payload ) )
         .then( () => Promise.resolve( payload ) );
 }
 

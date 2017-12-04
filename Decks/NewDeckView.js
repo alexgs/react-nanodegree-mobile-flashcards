@@ -6,6 +6,7 @@ import Button from '../Shared/Button';
 import InputField from '../Shared/InputField';
 import sharedStyles from '../Shared/styles';
 import { SCREENS } from '../constants';
+import uuidGenerator from 'uuid/v4';
 
 class NewDeckView extends PureComponent {
     constructor( props ) {
@@ -16,8 +17,9 @@ class NewDeckView extends PureComponent {
     }
 
     handleButtonPress() {
-        this.props.dispatch( actions.saveNewDeckStart( this.state.newDeckName ) );
-        this.props.navigation.navigate( SCREENS.DECK_LIST );
+        const deckId = uuidGenerator();
+        this.props.dispatch( actions.saveNewDeckStart( this.state.newDeckName, deckId ) );
+        this.props.navigation.navigate( SCREENS.SINGLE_DECK, { deckId } );
     }
 
     handleInputChange( text ) {
@@ -35,7 +37,7 @@ class NewDeckView extends PureComponent {
                     onChangeFunction={ this.handleInputChange }
                 />
                 <Button onPressFunction={ this.handleButtonPress } >
-                    <Text style={ sharedStyles.buttonText }>SAVE</Text>
+                    <Text style={ sharedStyles.buttonText }>Save</Text>
                 </Button>
             </View>
         );

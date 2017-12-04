@@ -54,9 +54,9 @@ function saveNewDeckComplete( data ) {
     };
 }
 
-export function saveNewDeckStart( title ) {
+export function saveNewDeckStart( title, deckId ) {
     return function( dispatch ) {
-        return api.saveNewDeck( title )
+        return api.saveNewDeck( title, deckId )
             .then( newDeckData => dispatch( saveNewDeckComplete( newDeckData ) ) )
             .catch( thunkErrorHandlerFactory( ERROR_SOURCES.API ) );
     };
