@@ -99,13 +99,14 @@ class QuizController extends React.PureComponent {
         const currentPosition = quizStore.get( QUIZ_STORE.CURRENT_POSITION );
         const showAnswer = quizStore.get( QUIZ_STORE.SHOW_ANSWER );
         const cardList = quizStore.get( QUIZ_STORE.CARD_LIST );
+        const questionsRemaining = cardList.size - currentPosition;
 
         let card = null;
         if ( currentPosition < cardList.size ) {
             const cardData = cardList.get( currentPosition );
             card = showAnswer
-                ? getAnswerCard( this.handleRecordAnswerPress, cardData.get( 'answer' ) )
-                : getQuestionCard( this.handleShowAnswerPress, cardData.get( 'question' ) );
+                ? getAnswerCard( this.handleRecordAnswerPress, cardData.get( 'answer' ), questionsRemaining )
+                : getQuestionCard( this.handleShowAnswerPress, cardData.get( 'question' ), questionsRemaining );
         } else {
             const correctCount = quizStore.get( QUIZ_STORE.CORRECT_ANSWER_COUNT );
             const totalCount = quizStore.get( QUIZ_STORE.TOTAL_ANSWER_COUNT );
@@ -127,20 +128,22 @@ class QuizController extends React.PureComponent {
     }
 }
 
-function getAnswerCard( recordAnswerFunction, answerText ) {
+function getAnswerCard( recordAnswerFunction, answerText, questionsRemaining ) {
     return (
         <AnswerCard
             answerText={ answerText }
+            questionsRemaining={ questionsRemaining }
             recordAnswerFunction={ recordAnswerFunction }
         />
     );
 }
 
-function getQuestionCard( showAnswerFunction, questionText ) {
+function getQuestionCard( showAnswerFunction, questionText, questionsRemaining ) {
     return (
         <QuestionCard
-            showAnswerFunction={ showAnswerFunction }
+            questionsRemaining={ questionsRemaining }
             questionText={ questionText }
+            showAnswerFunction={ showAnswerFunction }
         />
     );
 }

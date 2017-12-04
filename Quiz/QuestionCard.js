@@ -8,6 +8,7 @@ import sharedStyles from '../Shared/styles';
 class QuestionCard extends React.PureComponent {
     static propTypes = {
         showAnswerFunction: PropTypes.func.isRequired,
+        questionsRemaining: PropTypes.number.isRequired,
         questionText: PropTypes.string.isRequired
     };
 
@@ -22,7 +23,7 @@ class QuestionCard extends React.PureComponent {
 
     render() {
         return (
-            <BaseCard text={ this.props.questionText }>
+            <BaseCard questionsRemaining={ this.props.questionsRemaining } text={ this.props.questionText }>
                 <Button onPressFunction={ this.handleButtonPress }>
                     <Text style={ sharedStyles.buttonText }>Show Answer</Text>
                 </Button>

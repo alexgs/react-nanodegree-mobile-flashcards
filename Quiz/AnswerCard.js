@@ -8,7 +8,8 @@ import sharedStyles from '../Shared/styles';
 class AnswerCard extends React.PureComponent {
     static propTypes = {
         answerText: PropTypes.string.isRequired,
-        recordAnswerFunction: PropTypes.func.isRequired
+        recordAnswerFunction: PropTypes.func.isRequired,
+        questionsRemaining: PropTypes.number.isRequired
     };
 
     constructor( props ) {
@@ -27,7 +28,7 @@ class AnswerCard extends React.PureComponent {
 
     render() {
         return (
-            <BaseCard text={ this.props.answerText }>
+            <BaseCard questionsRemaining={ this.props.questionsRemaining } text={ this.props.answerText }>
                 <Button onPressFunction={ this.handleCorrectPress }>
                     <Text style={ sharedStyles.buttonText }>Correct</Text>
                 </Button>
