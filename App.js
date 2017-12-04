@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
 import TopLevelNavigator from './Navigators/TopLevel';
 import store from './store';
+import * as utils from './utils';
 
 const styles = StyleSheet.create( {
     topLevelContainer: {
@@ -13,6 +14,10 @@ const styles = StyleSheet.create( {
 } );
 
 export default class App extends React.Component {
+    componentDidMount() {
+        utils.setLocalNotification()
+    }
+
     render() {
         return (
             <Provider store={ store }>

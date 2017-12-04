@@ -19,6 +19,8 @@ export const ERROR_SOURCES = {
     API: 'error-sources.api'
 };
 
+export const NOTIFICATION_KEY = 'phils-awesome-mobile-flashcards:notifications';
+
 export const SCREENS = {
     HOME: 'screens.home',
     DECK_LIST: 'screens.deck-list',
