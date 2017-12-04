@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
@@ -8,6 +7,7 @@ import Button from '../Shared/Button';
 import BackButton from '../Shared/HeaderBackButton';
 import sharedStyles from '../Shared/styles';
 import { SCREENS, STORE } from '../constants';
+import * as utils from '../utils';
 
 const styles = StyleSheet.create( {
     cardCount: {
@@ -50,7 +50,7 @@ class SingleDeckView extends PureComponent {
 
     handleDeleteDeckPress( deckId ) {
         const deckMetadata = this.props[ STORE.DECK_METADATA ].get( deckId );
-        const deckTitle = getDeckTitle( deckId, deckMetadata );
+        const deckTitle = utils.getDeckTitle( deckMetadata );
         this.props.dispatch( actions.deleteDeckStart( deckId, deckTitle ) );
         this.props.navigation.navigate( SCREENS.DECK_LIST );
     }
@@ -74,16 +74,15 @@ class SingleDeckView extends PureComponent {
             return null;
         }
 
-        const deckTitle = getDeckTitle( deckId, deckMetadata );
-        const cardCount = cardList ? cardList.size : 0;
-        const cardCountLabel = cardCount === 1 ? 'card' : 'cards';
+        const deckTitle = utils.getDeckTitle( deckMetadata );
+        const cardCountText = utils.getCardCountText( cardList );
         const { height } = Dimensions.get('screen');
 
         return (
             <View style={ sharedStyles.container }>
                 <Text style={ [ styles.title, { paddingTop: height * 0.2 } ] }>{ deckTitle }</Text>
                 <Text style={ [ styles.cardCount, { paddingBottom: height * 0.1 } ] }>
-                    { cardCount } { cardCountLabel }
+                    { cardCountText }
                 </Text>
                 <Button onPressFunction={ this.handleAddCardPress } payload={ deckId }>
                     <Text style={ sharedStyles.buttonText }>Add Card</Text>
@@ -99,9 +98,6 @@ class SingleDeckView extends PureComponent {
     }
 }
 
-function getDeckTitle( deckId, metadata ) {
-    return _.startCase( metadata.get( 'title' ) );
-}
 
 function mapStateToProps( state ) {
     return {
