@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import * as api from '../api';
 import { ACTIONS, ERROR_SOURCES } from '../constants';
 import { thunkErrorHandlerFactory } from '../utils';
@@ -42,7 +43,10 @@ function loadDeckMetadataComplete( data ) {
 export function loadDeckMetadataStart() {
     return function( dispatch ) {
         return api.loadDeckMetaData()
-            .then( metadata => dispatch( loadDeckMetadataComplete( metadata ) ) )
+            .then( metadata => {
+                _.forEach( metadata, ( currentMetadata, deckId ) => dispatch( loadCardsStart( deckId ) ) );
+                dispatch( loadDeckMetadataComplete( metadata ) )
+            } )
             .catch( thunkErrorHandlerFactory( ERROR_SOURCES.API ) );
     };
 }
